@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 
 # Load token từ file .env
-load_dotenv("/storage/emulated/0/Download/.env")
+load_dotenv(".env")
 TOKEN = os.getenv("DISCORD_TOKEN")
 
 # ID của kênh và user chủ bot

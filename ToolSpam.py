@@ -12,7 +12,7 @@ TOKEN = os.getenv("DISCORD_TOKEN")
 # Cấu hình bot
 CHANNEL_ID = 1364890863410352180
 OWNER_ID = 1328308734627418213
-FILE_PATH = 'noidung.txt'  # Tên file nằm cùng thư mục
+FILE_PATH = 'noidung.txt'
 
 intents = discord.Intents.default()
 intents.messages = True
@@ -60,7 +60,7 @@ async def on_message(message):
         spamming[message.channel.id] = False
         await message.channel.send("Đã dừng spam.")
 
-# Flask server để giữ Render không ngủ
+# Flask server để giữ cho Render không ngắt
 app = Flask(__name__)
 
 @app.route('/')
@@ -73,10 +73,8 @@ def ping():
 
 # Chạy Flask song song với bot
 def run_flask():
-    import os
-port = int(os.environ.get("PORT", 10000))
-app.run(host="0.0.0.0", port=port)
-  # Port mặc định Render
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
 
 if __name__ == "__main__":
     threading.Thread(target=run_flask).start()

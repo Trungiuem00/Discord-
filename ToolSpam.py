@@ -11,7 +11,7 @@ TOKEN = os.getenv("DISCORD_TOKEN")
 CHANNEL_ID = 1364890863410352180
 OWNER_ID = 1328308734627418213  # ← Thay bằng user ID thật của bạn
 
-FILE_PATH = '/storage/emulated/0/Download/noidung.txt'
+FILE_PATH = 'noidung.txt'
 
 intents = discord.Intents.default()
 intents.messages = True

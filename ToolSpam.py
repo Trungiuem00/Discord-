@@ -1,17 +1,18 @@
 import discord
 import asyncio
 import os
+import threading
+from flask import Flask
 from dotenv import load_dotenv
 
-# Load token từ file .env
-load_dotenv(".env")
+# Tải token từ file .env
+load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 
-# ID của kênh và user chủ bot
+# Cấu hình bot
 CHANNEL_ID = 1364890863410352180
-OWNER_ID = 1328308734627418213  # ← Thay bằng user ID thật của bạn
-
-FILE_PATH = 'noidung.txt'
+OWNER_ID = 1328308734627418213
+FILE_PATH = 'noidung.txt'  # Tên file nằm cùng thư mục
 
 intents = discord.Intents.default()
 intents.messages = True
@@ -32,7 +33,7 @@ async def on_message(message):
         return
 
     if message.author.id != OWNER_ID:
-        return  # Chặn người lạ dùng bot
+        return
 
     if message.content.strip().lower() == "!spam":
         if spamming.get(message.channel.id):
@@ -50,7 +51,7 @@ async def on_message(message):
                 formatted = '\n'.join([f"> # {line}" for line in content.splitlines()])
                 await message.channel.send(formatted)
 
-                await asyncio.sleep(5)
+                await asyncio.sleep(20)
                 await message.channel.send("Tạm nghỉ 20 giây...")
         except Exception as e:
             await message.channel.send(f"Lỗi: {e}")
@@ -59,4 +60,21 @@ async def on_message(message):
         spamming[message.channel.id] = False
         await message.channel.send("Đã dừng spam.")
 
-client.run(TOKEN)
+# Flask server để giữ Render không ngủ
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return "Bot is running."
+
+@app.route('/ping')
+def ping():
+    return "pong"
+
+# Chạy Flask song song với bot
+def run_flask():
+    app.run(host='0.0.0.0', port=10000)  # Port mặc định Render
+
+if __name__ == "__main__":
+    threading.Thread(target=run_flask).start()
+    client.run(TOKEN)

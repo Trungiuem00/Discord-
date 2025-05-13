@@ -73,7 +73,10 @@ def ping():
 
 # Chạy Flask song song với bot
 def run_flask():
-    app.run(host='0.0.0.0', port=10000)  # Port mặc định Render
+    import os
+port = int(os.environ.get("PORT", 10000))
+app.run(host="0.0.0.0", port=port)
+  # Port mặc định Render
 
 if __name__ == "__main__":
     threading.Thread(target=run_flask).start()

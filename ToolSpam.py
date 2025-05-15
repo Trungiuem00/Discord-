@@ -51,7 +51,7 @@ async def on_message(message):
                 formatted = '\n'.join([f"> # {line}" for line in content.splitlines()])
                 await message.channel.send(formatted)
 
-                await asyncio.sleep(20)
+                await asyncio.sleep(5)
                 await message.channel.send("Tạm nghỉ 20 giây...")
         except Exception as e:
             await message.channel.send(f"Lỗi: {e}")

@@ -35,7 +35,7 @@ async def on_message(message):
     if message.author.id != OWNER_ID:
         return
 
-    if message.content.strip().lower() == "!spam":
+    if message.content.strip().lower() == "!sp":
         if spamming.get(message.channel.id):
             await message.channel.send("Đang spam rồi!")
             return
